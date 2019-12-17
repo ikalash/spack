@@ -3805,8 +3805,14 @@ class Spec(object):
             return None
 
     def tree(self, **kwargs):
-        """Prints out this spec and its dependencies, tree-formatted
-           with indentation."""
+        """Print this spec and its dependencies, tree-formatted and indented.
+           TODO: detailed documentation for arguments.
+        """
+        with spack.store.db.read_transaction():
+            return self._tree(**kwargs)
+
+    def _tree(self, **kwargs):
+        """Implementation of self.tree()."""
         color = kwargs.pop('color', get_color_when())
         depth = kwargs.pop('depth', False)
         hashes = kwargs.pop('hashes', False)
